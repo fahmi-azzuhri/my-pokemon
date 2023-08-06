@@ -5,14 +5,17 @@ import CardPokemon from "../pages/CardPokemon";
 import { ToastContainer, toast } from "react-toastify";
 
 const Main = () => {
-  const [previousPokemon, setPreviousPokemon] = useState(false);
+  const [previousPokemon, setPreviousPokemon] = useState(true);
   const [nextPokemon, setNextPokemon] = useState(true);
   const [pokedexs, setPokedexs] = useState([]);
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_POKEMON}/pokemon/`)
       .then((response) => {
         setPokedexs(response.data.results);
+        setPreviousPokemon(response.data.previous);
+        setNextPokemon(response.data.next);
       })
       .catch((error) => {
         toast.error("Error bro", {
@@ -20,10 +23,11 @@ const Main = () => {
         });
       });
   }, []);
+
   const handlePrev = () => {
     if (previousPokemon) {
       axios
-        .get(`${process.env.REACT_APP_POKEMON}/pokemon`)
+        .get(previousPokemon)
         .then((response) => {
           setPokedexs(response.data.results);
           setPreviousPokemon(response.data.previous);
@@ -38,7 +42,7 @@ const Main = () => {
   const handleNext = () => {
     if (nextPokemon) {
       axios
-        .get(`${process.env.REACT_APP_POKEMON}/pokemon/?offset=20&limit=20`)
+        .get(nextPokemon)
         .then((response) => {
           setPokedexs(response?.data?.results);
           setPreviousPokemon(response?.data?.previous);
@@ -49,6 +53,7 @@ const Main = () => {
         });
     }
   };
+
   return (
     <div>
       <Container>
