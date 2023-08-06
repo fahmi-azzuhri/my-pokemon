@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 const CardPokemon = ({ pokemon }) => {
   const [poke, setPoke] = useState([]);
   useEffect(() => {
@@ -16,13 +17,18 @@ const CardPokemon = ({ pokemon }) => {
   }, [pokemon.url]);
   return (
     <div>
-      <Card className="mt-4">
-        <Card.Img src={poke?.sprites?.front_default} alt="gambar pokemon" />
-        <Card.Body className="text-center">
-          <Card.Title>{poke?.name}</Card.Title>
-          <Button className="btn btn-primary mt-3">Details</Button>
-        </Card.Body>
-      </Card>
+      {poke && (
+        <Card className="mt-4">
+          <Card.Img src={poke?.sprites?.front_default} alt="gambar pokemon" />
+          <Card.Body className="text-center">
+            <Card.Title>{poke?.name}</Card.Title>
+
+            <Link to={`/detailpokemon/${poke?.name}`}>
+              <Button className="btn btn-primary mt-3">Details</Button>
+            </Link>
+          </Card.Body>
+        </Card>
+      )}
     </div>
   );
 };

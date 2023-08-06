@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import CardPokemon from "./CardPokemon";
+import CardPokemon from "../pages/CardPokemon";
+import { ToastContainer, toast } from "react-toastify";
 
 const Main = () => {
   const [pokedexs, setPokedexs] = React.useState([]);
@@ -10,10 +11,11 @@ const Main = () => {
       .get(`${process.env.REACT_APP_POKEMON}/pokemon/`)
       .then((response) => {
         setPokedexs(response.data.results);
-        console.log(response.data.results);
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Error bro", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       });
   }, []);
   return (
@@ -28,6 +30,7 @@ const Main = () => {
             );
           })}
         </Row>
+        <ToastContainer />
       </Container>
     </div>
   );

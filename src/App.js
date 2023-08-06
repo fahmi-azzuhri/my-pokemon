@@ -1,14 +1,18 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
-import Main from "./pages/Main";
-import CardPokemon from "./pages/CardPokemon";
+import Main from "./components/Main";
+import DetailPokemon from "./pages/DetailPokemon";
+import { BrowserRouter as Router } from "react-router-dom";
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/detailpokemon" element={<CardPokemon />} />
-    </Routes>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/detailpokemon/:name" element={<DetailPokemon />} />
+      </Routes>
+    </Router>
   );
 }
 
