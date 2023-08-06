@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 const CardPokemon = ({ pokemon }) => {
   const [poke, setPoke] = useState([]);
   useEffect(() => {
@@ -9,12 +10,13 @@ const CardPokemon = ({ pokemon }) => {
       .get(pokemon.url)
       .then((response) => {
         setPoke(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Error bro", {});
       });
   }, [pokemon.url]);
+
   return (
     <div>
       {poke && (
@@ -29,6 +31,8 @@ const CardPokemon = ({ pokemon }) => {
           </Card.Body>
         </Card>
       )}
+
+      <ToastContainer />
     </div>
   );
 };
